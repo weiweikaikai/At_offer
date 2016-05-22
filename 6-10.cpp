@@ -7,6 +7,7 @@
 
 #include<iostream>
 #include<stack>
+#include<string.h>
 using namespace std;
 
 /*
@@ -216,7 +217,8 @@ int main()
   return 0;
 }
 */
-//求数值的整数次方
+/*
+//10.求数值的整数次方
 double Power(double num,int n )
 {
 	if((num>-0.0000001 && num < 0.0000001))
@@ -246,8 +248,7 @@ double Power(double num,int n )
 
 int main()
 {
-
 cout<<Power(0,1)<<endl;
 return 0;
-
 }
+*/
