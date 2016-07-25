@@ -8,7 +8,7 @@
 #include<iostream>
 using namespace std;
  
-//11.打印 1-----N个数字组成的最大数
+//11.打印 1到-----N个数字组成的最大数
 bool  Increment(char *number,int n)
 {
 	bool ret = false;
