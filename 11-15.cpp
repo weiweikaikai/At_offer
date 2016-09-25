@@ -6,9 +6,11 @@
  ************************************************************************/
 
 #include<iostream>
+#include<stdlib.h>
+#include<string.h>
 using namespace std;
  
-//11.打印 1到-----N个数字组成的最大数
+//11.打印 1到--N个数字组成的最大数
 bool  Increment(char *number,int n)
 {
 	bool ret = false;
@@ -49,7 +51,7 @@ void PrintNumber(char *number,int n)
 	{
      if(begin && number[i] != '0')
 		{
-	   begin=false;
+	       begin=false;
 	     }
 		 if(!begin)
 		{
@@ -63,7 +65,7 @@ void Print1ToMaxOfNdigit(int n)
 {
   if(n <=0 )
 	{
-   return ;
+      return ;
     }
    char *number= new char[n+1];
    memset(number,'0',n);
@@ -80,11 +82,108 @@ void Print1ToMaxOfNdigit(int n)
 
 }
 
-int main()
+void test_11()
 {
-
-Print1ToMaxOfNdigit(2); 
-
-return 0;
+  Print1ToMaxOfNdigit(2); 
 }
 
+//12.用O(1)的复杂度删除链表节点
+typedef struct ListNode
+{
+	struct ListNode *next;
+	int data;
+}ListNode;
+
+void push_back(ListNode *&head,int dt)
+{
+    if(head == NULL)
+	{
+	   head = new ListNode;
+	   head->data = dt;
+	   head->next = NULL;
+	}
+     else
+	{
+	   ListNode *cur=head;
+	   while(cur->next != NULL)
+		{
+	     cur=cur->next;
+	    }
+		ListNode *tmp =new ListNode;
+		tmp->data=dt;
+		tmp->next =NULL;
+		cur->next =tmp;
+     }
+}
+
+void print(ListNode *head)
+{
+	if(head == NULL)
+	{
+	  return;
+	}
+    ListNode *cur=head;
+
+	while(cur != NULL)
+	{
+		cout<<cur->data;
+	   if(cur->next != NULL)
+		   cout<<"->";
+	   cur=cur->next;
+	}
+	cout<<endl;
+}
+
+void del_node(ListNode*&head,ListNode*delnode)
+{
+   if(head == NULL || delnode == NULL)
+	{
+      return;
+   }
+   if(delnode->next == NULL)
+	{
+      ListNode *cur=head;
+	  if(cur == delnode)//是头节点
+		{
+			head=cur->next;
+	    }
+		else//是尾节点
+		{
+	       while(cur->next != delnode)
+	     {
+	         cur=cur->next;
+	     }
+	      cur->next==NULL;
+		}
+	  delete delnode;
+	  delnode=NULL;
+    }
+	else //不是头节点也不是尾节点
+	{
+	  delnode->data=delnode->next->data;
+	  ListNode *tmp = delnode->next;
+	  delnode->next = delnode->next->next;
+
+	  delete tmp;
+	  tmp=NULL;
+	}
+}
+
+
+void test_12()
+{
+
+  ListNode *head =NULL;
+  for(int i=0;i<10;++i)
+  push_back(head,i);
+    print(head);
+
+  del_node(head,head);
+  print(head);
+}
+
+int main()
+{
+  test_12();
+return 0;
+}

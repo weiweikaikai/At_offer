@@ -10,8 +10,7 @@
 #include<string.h>
 using namespace std;
 
-/*
-//6. Double_stack_cteate_queue
+//6. Double_stack_cteate_queue 用两个栈实现队列
 
 template<typename T>
 class My_queue
@@ -51,7 +50,7 @@ class My_queue
 };
 
 
-int main()
+void test_6()
 {
 
 My_queue<int> a;
@@ -61,9 +60,8 @@ a.Push(2);
 cout<<a.Pop()<<endl;
     return 0;
 }
-*/
-/*
-//7.旋转数组中找最小的值
+
+//7.寻找旋转数组中找最小的值
 int find_min_from_array(int array[],int length)
 {
   if(array == 0 || length <=0)
@@ -107,20 +105,16 @@ int find_min_from_array(int array[],int length)
   return mid;
 }
 
-int main()
+void test_7()
 {
 
 //int array[]={4,5,1,2,3};
 int array[]={1,0,1,1,1};
 cout<<find_min_from_array(array,5)<<endl;
-
-  return 0;
 }
-*/
 
-/*
+
 //8.斐波那契数列
-
 //递归实现
 int  Recur_Fibonacci(int n)
 {
@@ -159,15 +153,13 @@ int Loop_Fibonacci(int n)
 	 return f3;
 
 }
-int main()
+void test_8()
 {
 cout<<Loop_Fibonacci(6)<<endl;
 
-return 0;
 }
-*/
-/*
-//9.二进制中1的个数
+
+//9.一个数的二进制表示其中1的个数
 //解法1
 int Number_Of_One(int n)
 {
@@ -182,10 +174,7 @@ int Number_Of_One(int n)
   }
   return count;
 }
-*/
-/*
 //解法2
-
 int Number_Of_One(int n)
 {
      int count = 0;
@@ -197,7 +186,7 @@ int Number_Of_One(int n)
      return count;
 }
 
-
+//扩展：一个数的二进制表示其中0的个数
 int Number_Of_Zero(int n)
 {
     int count=0;
@@ -210,14 +199,12 @@ int Number_Of_Zero(int n)
     return count;
 }
 
-int main()
+void test_9()
 {
    cout<<Number_Of_One(15)<<endl;
     cout<<Number_Of_Zero(15)<<endl;
-  return 0;
 }
-*/
-/*
+
 //10.求数值的整数次方
 double Power(double num,int n )
 {
@@ -246,9 +233,13 @@ double Power(double num,int n )
 	  return result;
 }
 
-int main()
+void test_10()
 {
 cout<<Power(0,1)<<endl;
+}
+
+int main()
+{
+    test_6();
 return 0;
 }
-*/

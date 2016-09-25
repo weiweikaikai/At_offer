@@ -9,11 +9,264 @@
 #include<set>
 #include<map>
 #include<hash_set>
+#include<string.h>
+using namespace std;
 
 
 
-/*/
-/1.有序二维数组中查找数字 最好O(1) 最坏 O(m+n)
+int leftTopToRightbottom(int (&vec)[4][4])
+{
+
+     int (*p)[4] = new int[4][4];
+
+     for(int i=0;i<4;++i)
+	 {
+	   for(int j=0;j<4;++j)
+	   {
+	     if(i == 0 && j==0)
+		   {
+		     p[i][j] += vec[i][j];
+		   }
+		  else if(i==0 && j>0) //往右边走
+		   {
+		     p[i][j] = p[i][j-1] + vec[i][j];
+		   }
+		   else if(i>0 && j==0)//往下面走
+		   {
+		     p[i][j]=p[i-1][j]+vec[i][j];
+		   }
+		   else
+		   {
+		     p[i][j] =(p[i-1][j] > p[i][j-1] ?p[i-1][j]:p[i][j-1] )+vec[i][j];
+		   }
+
+	   }
+	 
+	 }
+	 return p[3][3];
+}
+
+
+void test_leftTopToRightbottom()
+{
+
+      int arr[4][4]={
+	  
+		  {1,10,3,8},
+		  {12,2,9,6},
+		  {5,7,4,11},
+		  {3,7,16,5}
+	  };
+
+	  cout<<leftTopToRightbottom(arr)<<endl;
+
+}
+
+
+/*
+ 已知某次聚会共有N个人参加，这N个人来自26个不同的地区，先将26个地区用a-z进行表示，
+ * 使用整数数组Location存储这N个人的地区，请返回一个boolean类型的变量
+ * true代表所有人的地区都不一样，false代表存在一样地区的人。
+*/
+
+//分析：首先地区是有限的，可以采用空间换时间进行
+bool MyLocation(vector<char>&vec)
+{
+   if(vec.size() == 0)
+   {
+       return false;
+   }
+   vector<int> tmp(26,0);
+   for(int i=0;i<tmp.size();++i)
+   {
+          if((++tmp[vec[i]]) == 2)
+	      {
+		     return false;
+		  }
+   }
+   return true;
+}
+
+void test_Location()
+{
+   char arr[27]="abcdefghijklmnopqrstuvwxyz";
+
+   vector<char> vec(arr,arr+26);
+
+cout<<MyLocation(vec)<<endl;
+}
+
+
+
+//判断一个整形数组中是否存在三个元素的和为0
+bool SumIsZero(vector<int> &vec,int sum,int r,int key)
+{
+   if(vec.size() <3)
+	{
+      return false; 
+    }
+    
+	int left = 0;
+	int right = r-1;
+	int tmp=0;
+	while(left < right)
+	{
+	   tmp = vec[left] + vec[right];
+	   if((sum +tmp) == key)
+		{
+	         cout<<vec[r]<<" "<<vec[left]<<" "<<vec[right]<<endl;
+			 return true;
+	    }
+		if((sum+tmp) > key)
+		{
+		   right--;
+		}
+		if((sum + tmp) <key)
+		{
+		   left++;
+		}
+	}
+
+
+}
+
+
+void test_sumIszero()
+{
+
+int arr[10]={1,2,-3,8,4,5,6,7,8,9};
+
+vector<int> vec(arr,arr+9);
+sort(vec.begin(),vec.end());
+for(int i=9;i>=2;--i)
+{
+   SumIsZero(vec,vec[i],i,15);
+}
+
+}
+//一个数组中所有元素都出现了三次，至于一个数字出现了1次，找出这个数字
+
+void Find_Nums(vector<int> &vec)
+{
+   if(vec.size () == 0)
+	{
+     return;
+    }
+    int size = (int)vec.size();
+	vector<int> tmp(100,0);
+	for(int i=0;i<size;++i)
+	{
+	    tmp[vec[i]]++;
+	}
+    for(int i=0;i<tmp.size();++i)
+	{
+        if(tmp[i] == 1)
+		{
+		   cout<<i<<endl;
+		}
+    }
+
+}
+
+
+size_t  Count_One(int value)
+{
+   size_t count=0;
+
+   while(value)
+	{
+      value &= (value-1);
+	  count++;
+    }
+	return count;
+}
+
+void Find_Nums_2(vector<int> &vec)
+{
+   if(vec.size() == 0)
+	{
+       return;
+    }
+      size_t sum=0;
+	for(int i=0;i<vec.size(); ++i)
+	 {
+	   sum =sum+Count_One(vec[i]);     
+	 }
+	 size_t value = sum%3;
+	 for(int i=0;i<vec.size();++i)
+	{
+	    if(Count_One(vec[i]) == value)
+		{
+		  cout<<vec[i]<<endl;
+		  return ;
+		}
+	 }
+}
+void test_Find_Num()
+{
+      int arr[10]={1,2,2,2,3,3,3,4,4,4};
+
+      vector<int> vec(arr,arr+10);
+    //Find_Nums(vec);
+	Find_Nums_2(vec);
+}
+
+class Mystring
+{
+  public:
+	  Mystring(char *str="")
+	  {
+         if(str == NULL)
+		  {
+		    data = new char[1];
+			data[0]='\0';
+		  }
+		  else
+		  {
+		     data=new char[strlen(str)+1];
+              strcpy(data,str);
+		  }
+      }
+       Mystring(const Mystring &str)
+	   {
+		   data = new char[strlen(str.data)];
+	       strcpy(data,str.data);
+	   }
+       Mystring&operator=(const Mystring &str)
+	   {
+	        if(this != &str)
+		     {
+			     Mystring tmp(str.data);
+				 swap(data,tmp.data);
+			 }
+			  return *this;
+	   }
+	   ~Mystring()
+	  {
+	     if(data != NULL)
+		  {
+		   delete []data;
+		  }
+	   }
+	   void print()
+    	{
+	      cout<<data<<endl;  
+	    }
+	  private:
+		  char *data;
+};
+
+void test_string()
+{
+    Mystring str0("");
+	Mystring str1(NULL);
+    Mystring str2("hello");
+    str2.print();
+	 str1=str2;
+      str1.print();
+}
+
+//1.有序二维数组中查找数字 最好O(1) 最坏 O(m+n)
 int  Find(int *arr, int rows,int colums,int x)
 {
 	if (arr == NULL || rows <0 || colums < 0)
@@ -43,17 +296,15 @@ int  Find(int *arr, int rows,int colums,int x)
 		}
 	}
 }
-int main()
+void test_1()
 {
 	int arr[][4] = { 1, 2, 8, 9, 2, 4, 9, 12, 4, 7, 10, 13, 6, 8, 11, 15 };
 	std::cout << Find((int*)arr, 4, 4, 7) << std::endl;
 	std::cout << Find((int*)arr, 4, 4, 1) << std::endl;
 	std::cout << Find((int*)arr, 4, 4, 15) << std::endl;
 	std::cout << Find(NULL, 4, 4, 7) << std::endl;
-	getchar();
-	return 0;
-}*/
-/*
+}
+
 //2.替换字符串中的空格为%20   O(n)
 void Replace_Blank(char* dest,int length)
 {
@@ -96,17 +347,14 @@ void Replace_Blank(char* dest,int length)
 		old_cur--;
 	}
 }
-int main()
+void test_2()
 {
 	char str[30] = "I am a boy";
 	Replace_Blank(str,30);
 	//Replace_Blank(NULL, 30);
 	//Replace_Blank(str, 10);
 	std::cout << str << std::endl;
-	getchar();
-	return 0;
-}*/
-/*
+}
 //3.从尾到头打印链表
 typedef struct node
 {
@@ -218,7 +466,7 @@ Lnode insertionSortList(Lnode head) {
 }
 
 
-int main()
+void test_3()
 {
 	Lnode head = NULL;
 	for (int i = 10; i>=0;--i)
@@ -228,20 +476,16 @@ int main()
 	Show_List(insertionSortList(head));
 	//Print_List_By_back(head);
 	//Print_List_By_back_2(head);
-	getchar();
-	return 0;
 }
-*/
 
 //4.二叉树还原
- 
  struct TreeNode {
 	int val;
 	TreeNode *left;
 	TreeNode *right;
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
- /*//前序 和中序还原
+//前序 和中序还原
  struct TreeNode * ReconstructBinTreeBy_Pre_In(std::vector<int> pre, std::vector<int>in)
  {
 	 if (pre.size() == 0 || in.size() == 0)
@@ -285,7 +529,6 @@ int main()
 	 return node;
  }
  // 中序和后序还原
-
  struct TreeNode * ReconstructBinTreeBy_In_post(std::vector<int> in, std::vector<int>post)
  {
 	 if (in.size() == 0 || post.size() == 0)
@@ -326,14 +569,13 @@ int main()
 	 ReconstructBinTreeBy_In_post(in_right, post_right);
 	 return node;
  }
- int main()
+void test_4()
  {
  char pre_arr[]="12473568";
  char in_arr[]="47215386";
  char post_arr[]="47258631";
  }
- */
-/*
+
 //5.全排列
 void Permutations(char *p ,int l, int r)
 {
@@ -362,15 +604,22 @@ void Permutations(char *p ,int l, int r)
 }
 
 
-int main(void) 
+void test_5(void) 
 {
 	char arr[] = "01235";
 	Permutations(arr, 0,5); //排列的个数是数字个数的阶乘这里是5！
-
-	getchar(); 
-	return 0;
 }
-*/
+
+int main()
+{
+	//test_1();
+//	test_string();
+//test_sumIszero();
+//test_Find_Num();
+//test_Location();
+test_leftTopToRightbottom();
+    return 0;
+}
 
 
 

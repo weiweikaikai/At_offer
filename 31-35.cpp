@@ -8,6 +8,7 @@
 #include<vector>
 #include<algorithm>
 #include<string>
+#include<stack>
 #include<iostream>
 using namespace std;
  //31连续子数组的最大和
@@ -33,24 +34,93 @@ using namespace std;
 		   {
 		    sum += array[i];
 		   }
+		 
 		   if(sum > Max)
 		   {
-		      Max = sum;
+		      Max = sum; 
 		   }
 	   }
+
 	   return Max;
   }
 void test_31()
 {
     vector<int> array;
+	array.push_back(6);
+	array.push_back(-3);
 	array.push_back(-2);
-	array.push_back(-8);
-	array.push_back(-1);
-	array.push_back(-5);
-	array.push_back(-9);
+	array.push_back(7);
+	array.push_back(-15);
+    array.push_back(1);
+	array.push_back(2);
+	array.push_back(2);
 	cout<<FindGreatestSumOfSubArray(array)<<endl;
 }
-//31.整数中1出现的次数（从1到n整数中1出现的次数）
+
+//31扩展   打印出和最大的子序列
+int FindGreat(vector<int> array)
+{
+	if (array.size() == 0)
+	{
+		return 0;
+	}
+	int Max = 0x80000000;
+	int sum = 0;
+	int end = 0;
+	stack<int>st;
+	for (int i = 0; i<(int)array.size(); ++i)
+	{
+		if (sum <= 0)
+		{
+			sum = array[i];
+		}
+		else
+		{
+			sum += array[i];
+		}
+		if (sum > Max)
+		{
+			Max = sum;
+			end = i;
+		}
+	}
+	int tmp=Max;
+	for (int j = end; j >= 0; --j)
+	{
+		tmp -=array[j];
+		if ( tmp== 0)
+		{
+			st.push(array[j]);
+			break;
+		}
+		else
+		{
+			st.push(array[j]);
+		}
+	}
+	while (!st.empty())
+	{
+		cout << st.top() << " ";
+		st.pop();
+	}
+	cout << endl;
+	return Max;
+}
+void test_31_()
+{
+	vector<int> array;
+	array.push_back(6);
+	array.push_back(-3);
+	array.push_back(-2);
+	array.push_back(7);
+	array.push_back(-15);
+	array.push_back(1);
+	array.push_back(2);
+	array.push_back(2);
+	cout << FindGreat(array) << endl;
+}
+
+//32.整数中1出现的次数（从1到n整数中1出现的次数）
   int NumberOf1Between1AndN_Solution(int n)
   {
 	  if(n<=0 )
@@ -189,8 +259,9 @@ void test_35()
 int main()
 {
 	
-	//test_31();
-     test_32();
+	test_31();
+	test_31_();
+    // test_32();
    //test_33();
    // test_34();
    // test_35();
