@@ -71,10 +71,36 @@ int add (int num1,int num2)
 	  carray = (num1&num2) <<1;
 	  num1= sum;
 	  num2=carray;
-  }
-  while (num2 != 0);
+  } while (num2 != 0);
   cout<<num1<<endl;
   return num1;
+}
+
+//48:不能被继承的类 用C++设计一个不能被继承的类
+
+//1.把构造函数 和析构函数 设置为私有 
+//但是为了可以获得当前类的实例还是要定义一个公有的静态函数来创建和释放类的实例
+
+class hello
+{
+	public:
+	static hello* getinstance()
+	{
+	   return new hello();
+	}
+	static void deleteinstance(hello * p)
+	{
+	   delete p;
+	   p=NULL;
+	}
+};
+
+void test_49()
+{
+   cout<<Myatoi("+1234567")<<endl;
+   cout<<Myatoi("-1234567")<<endl;
+   cout<<Myatoi("1234567")<<endl;
+   cout<<Myatoi("")<<endl;
 }
 //49: 字符串转化为数字
 int  Myatoi(const char *str)
@@ -105,33 +131,6 @@ int  Myatoi(const char *str)
 	return ret*flag;
 
 }
-//48:不能别继承的类 用C++设计一个不能被继承的类
-
-//1.把构造函数 和析构函数 设置为私有 
-//但是为了可以获得当前类的实例还是要定义一个公有的静态函数来创建和释放类的实例
-
-class hello
-{
-	public:
-	static hello* getinstance()
-	{
-	   return new hello();
-	}
-	static void deleteinstance(hello * p)
-	{
-	   delete p;
-	   p=NULL;
-	}
-};
-
-void test_49()
-{
-   cout<<Myatoi("+1234567")<<endl;
-   cout<<Myatoi("-1234567")<<endl;
-   cout<<Myatoi("1234567")<<endl;
-   cout<<Myatoi("")<<endl;
-}
-
 //50树中两个节点的最低公共祖先
 
 
